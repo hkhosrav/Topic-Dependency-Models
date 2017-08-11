@@ -7,6 +7,8 @@
 #root {
     font-size: 0px;
     line-height: 0px;
+    box-shadow: 10px 10px 20px #ccc;
+    border: 1px solid #ddd;
 }
 
 #graphContainer,
@@ -27,7 +29,7 @@
 }
 
 #graphContainer>div:not(:first-child) {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid #ddd;
 }
 
 #configurationContainer {
