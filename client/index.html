@@ -3,14 +3,51 @@
 <head>
     <title>Topic Dependency Models</title>
     <link href="style.css" rel="stylesheet" />
-    <script src="d3v4.min.js"></script>
+    <script src="d3.v4.min.js"></script>
+    <!-- https://github.com/gupta-ankit/range-slider.js/tree/master -->
     <script src="graph.js"></script>
+    <script src="events.js"></script>
 </head>
 
 <body>
-    <div id="graphContainer">
-    </div>
-    <div id="configurationContainer">
+    <div id="root">
+        <div id="graphContainer">
+        </div>
+        <div id="configurationContainer">
+            <h2>Students</h2>
+            <div data-name="studentNumber" class="input item">
+                <h3>Number of Students</h3>
+            </div>
+            <div data-name="studentDiversity" class="input item">
+                <h3>Diversity Of Students</h3>
+            </div>
+            <hr />
+            <h2>Questions</h2>
+            <div data-name="questionNumber" class="input item">
+                <h3>Number of Questions</h3>
+            </div>
+            <div data-name="questionDifficulty" class="input item">
+                <h3>Difficulty of Questions</h3>
+            </div>
+            <hr />
+            <h2>Settings</h2>
+            <div data-name="competencyValue" class="input item">
+                <h3>Taylor's Competency</h3>
+            </div>
+            <div data-name="modelClass" class="switch item">
+                <h3>Model Class</h3>
+                <span class="switchLabel">Static</span>
+                <!-- https://proto.io/freebies/onoff/ -->
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+                </div>
+                <span class="switchLabel">Dynamic</span>
+            </div>
+        </div>
     </div>
 </body>
 
