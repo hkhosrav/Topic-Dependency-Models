@@ -1,4 +1,4 @@
-function drawGraph(target, edges, nodes, tick) {
+function drawGraph(target, edges, nodes, notifyQueue, useNotify) {
     var bBox = target.getBoundingClientRect();
     var width = bBox.width;
     var height = bBox.height;
@@ -7,33 +7,33 @@ function drawGraph(target, edges, nodes, tick) {
     var graphWidth = width - (nodeRadius * 2);
     var graphHeight = height - (nodeRadius * 2);
 
-    function ticked(link, node, labels, radius) {
+    function ticked(node, radius) {
         return function () {
             node
                 .attr("cx", (d, i) => {
-                    if (tick) {
-                        d.x = Math.max(radius, Math.min(graphWidth - radius, d.x));
-                        return d.x;
-                    }
-                    return nodes[i].x;
+                    d.x = Math.max(radius, Math.min(graphWidth - radius, d.x));
                 })
                 .attr("cy", (d, i) => {
-                    if (tick) {
-                        d.y = Math.max(radius, Math.min(graphHeight - radius, d.y));
-                        return d.y;
-                    }
-                    return nodes[i].y;
+                    d.y = Math.max(radius, Math.min(graphHeight - radius, d.y));
                 });
 
-            link
-                .attr("x1", d => d.source.x)
-                .attr("y1", d => d.source.y)
-                .attr("x2", d => d.target.x)
-                .attr("y2", d => d.target.y);
-
-            labels
-                .attr("dx", d => d.x)
-                .attr("dy", d => d.y + 4);
+            notifyQueue.forEach(function (queueItem) {
+                queueItem.nodes
+                    .attr("cx", (d, i) => {
+                        return d.x;
+                    })
+                    .attr("cy", (d, i) => {
+                        return d.y;
+                    });
+                queueItem.links
+                    .attr("x1", d => d.source.x)
+                    .attr("y1", d => d.source.y)
+                    .attr("x2", d => d.target.x)
+                    .attr("y2", d => d.target.y);
+                queueItem.labels
+                    .attr("dx", d => d.x)
+                    .attr("dy", d => d.y + 4);
+            });
         };
     };
 
@@ -53,7 +53,6 @@ function drawGraph(target, edges, nodes, tick) {
     var getStrokeColour = d => lineColour((d.competency - maxColour) / (minColour - maxColour));
 
     var svg = d3.select(target)
-        .html(null)
         .append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -109,6 +108,17 @@ function drawGraph(target, edges, nodes, tick) {
         .attr("text-anchor", "middle")
         .text(d => d.id);
 
-    simulation
-        .on("tick", ticked(link, node, labels, nodeRadius));
+    notifyQueue.push({
+        links: link,
+        nodes: node,
+        labels: labels,
+        radius: nodeRadius
+    });
+
+    if (useNotify) {
+        simulation.stop();
+    } else {
+        simulation
+            .on("tick", ticked(node, nodeRadius));
+    }
 }

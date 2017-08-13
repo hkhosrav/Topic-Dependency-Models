@@ -1,35 +1,5 @@
-function generateMockData() {
-    function randInt(r) {
-        return Math.floor(Math.random() * r);
-    }
-    var nodes = new Array(10).fill(0).map(x => String.fromCharCode(65 + randInt(6)));
-    edges = [];
-
-    nodes.forEach(x => {
-        edges.push([
-            x,
-            x,
-            randInt(100),
-            randInt(100)
-        ]);
-        var randomNode = nodes[randInt(nodes.length)];
-        if (randomNode == x) return;
-        edges.push([
-            x,
-            randomNode,
-            randInt(100),
-            randInt(100)
-        ]);
-    });
-
-    return {
-        nodes: nodes,
-        edges: edges
-    };
-}
-
 function updateGraph(e) {
-    var query = Array.from(document.querySelectorAll(".item")).map(x => {
+    var query = Array.from(document.querySelectorAll(".item")).map(function (x) {
         var input = x.querySelector("input");
         var value = input.value;
         if (input.type == "checkbox") {
@@ -39,41 +9,60 @@ function updateGraph(e) {
         return x.getAttribute("data-name") + "=" + value;
     }).join("&");
 
-    // Mock query response ...
-    var response = [generateMockData(), generateMockData()];
+    d3.json("//localhost:9000", function (response) {
+        var target = document.getElementById("graphContainer");
+        target.innerHTML = "";
+        var height = document.getElementById("configurationContainer").getBoundingClientRect().height;
+        target.style.height = height + "px";
 
-    var target = document.getElementById("graphContainer");
-    target.innerHTML = "";
-    var height = document.getElementById("configurationContainer").getBoundingClientRect().height;
+        // Get all unique nodes
+        var uniqueNodes = response
+            .reduce(function (a, b) {
+                return a.concat(b.data.nodes);
+            }, [])
+            .reduce(function (carry, node) {
+                if (!carry.find(function (x) {
+                        return x == node
+                    })) {
+                    carry.push(node);
+                }
+                return carry;
+            }, [])
+            .map(function (x) {
+                return {
+                    id: x
+                }
+            });
 
-    target.style.height = height + "px";
-
-    var uniqueNodes = response
-        .reduce((a, b) => a.nodes.concat(b.nodes))
-        .reduce((carry, node) => {
-            if (!carry.find(x => x == node)) {
-                carry.push(node);
-            }
+        var uniqueNodeHashMap = uniqueNodes.reduce(function (carry, x) {
+            carry[x.id] = x;
             return carry;
-        }, [])
-        .map(x => ({
-            id: x
-        }));
+        }, {});
 
+        var notifyQueue = [];
 
-    response.forEach((x, i) => {
-        var subGraph = document.createElement("div");
-        var width = document.getElementById("graphContainer").getBoundingClientRect().width / response.length;
-        subGraph.style.width = width + "px";
-        subGraph.style.height = height + "px";
-        target.appendChild(subGraph);
-        var edges = x.edges.map(edge => ({
-            target: uniqueNodes.find(x => x.id == edge[0]),
-            source: uniqueNodes.find(x => x.id == edge[1]),
-            attempts: edge[2],
-            competency: edge[3]
-        }));
-        drawGraph(subGraph, edges, uniqueNodes, i == 0);
+        response.forEach(function (x, i) {
+            var data = x.data;
+            var subGraph = document.createElement("div");
+
+            var subGraphTitle = document.createElement("h2");
+            subGraphTitle.className = "subGraphTitle";
+            subGraphTitle.innerText = x.name;
+            subGraph.appendChild(subGraphTitle);
+
+            var width = document.getElementById("graphContainer").getBoundingClientRect().width / 2;
+            subGraph.style.width = width + "px";
+            subGraph.style.height = height + "px";
+            target.appendChild(subGraph);
+            var edges = data.edges.map(edge => ({
+                target: uniqueNodeHashMap[edge[0]],
+                source: uniqueNodeHashMap[edge[1]],
+                attempts: edge[2],
+                competency: edge[3]
+            }));
+
+            drawGraph(subGraph, edges, uniqueNodes, notifyQueue, i);
+        });
     });
 }
 

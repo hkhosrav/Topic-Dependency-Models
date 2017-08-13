@@ -26,6 +26,16 @@
 #graphContainer>div {
     display: inline-block;
     vertical-align: middle;
+    position: relative;
+}
+
+.subGraphTitle {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    left: 0px;
+    text-align: center;
+    color: #888;
 }
 
 #graphContainer>div:not(:first-child) {
