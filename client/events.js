@@ -1,4 +1,6 @@
 function updateGraph(e) {
+    e.preventDefault();
+
     var query = Array.from(document.querySelectorAll(".item")).map(function(x) {
         var input = x.querySelector("input");
         var value = input.value;
@@ -102,13 +104,23 @@ window.addEventListener("load", function() {
             elem.appendChild(rangeContainer);
             elem.appendChild(input);
 
+            input.addEventListener("input", function(e) {
+                e.preventDefault();
+                var val = +e.target.value;
+                if (isNaN(val)) {
+                    e.target.value = min;
+                } else if (val < min) {
+                    e.target.value = min;
+                } else if (val > max) {
+                    e.target.value = max;
+                }
+                rangeInput.value = e.target.value;
+            });
+
             rangeInput.addEventListener("input", function(e) {
                 input.value = e.target.value;
             });
-            input.addEventListener("change", updateGraph);
-            rangeInput.addEventListener("change", updateGraph);
         });
 
-    document.getElementById("myonoffswitch").addEventListener("change", updateGraph)
-    updateGraph();
+    document.getElementById("simulateButton").addEventListener("click", updateGraph);
 });
