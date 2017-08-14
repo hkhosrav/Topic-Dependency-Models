@@ -3,6 +3,13 @@
 * {
     box-sizing: border-box;
 }
+body {
+    margin:32px;
+}
+h1 {
+    text-align: center;
+    color: #444;
+}
 
 #root {
     font-size: 0px;
@@ -20,7 +27,7 @@
 }
 
 #graphContainer {
-    width: 75%;
+    width: 80%;
 }
 
 #graphContainer>div {
@@ -46,7 +53,7 @@
     background-color: #f2f2f2;
     border: 1px solid #ccc;
     padding: 16px;
-    width: 25%;
+    width: 20%;
 }
 
 h2 {
