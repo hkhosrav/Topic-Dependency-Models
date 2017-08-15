@@ -15,10 +15,10 @@
         </div>
         <div id="configurationContainer">
             <h2>Students</h2>
-            <div data-name="studentNumber" data-min="0" data-max="100" class="input item">
+            <div data-name="studentNumber" data-min="0" data-max="500" data-step="1" class="input item">
                 <h3>Number of Students</h3>
             </div>
-            <div data-name="studentDiversity" data-min="0" data-max="10" class="input item">
+            <div data-name="studentDiversity" data-min="0" data-max="1" data-step="0.01" class="input item">
                 <h3>Diversity Of Students</h3>
             </div>
             <hr />
@@ -26,12 +26,20 @@
             <div data-name="questionNumber" data-min="1" data-max="1000" data-step="1" class="input item">
                 <h3>Number of Questions</h3>
             </div>
-            <div data-name="questionDifficulty" class="input item">
+            <div data-name="questionDifficulty" data-min="0" data-max="1" data-step="0.01" class="input item">
                 <h3>Difficulty of Questions</h3>
             </div>
             <hr />
+ 				<h2>Topics</h2>
+            <div data-name="topicNumber" data-min="1" data-max="20" data-step="1" class="input item">
+                <h3>Number of Topics</h3>
+            </div>
+            <div data-name="topicDiversity" data-min="0" data-max="1" data-step="0.01" class="input item">
+                <h3>Diversity of Topics</h3>
+            </div>
+            <hr />            
             <h2>Settings</h2>
-            <div data-name="competencyValue" class="input item">
+            <div data-name="competencyValue" data-min="0" data-max="1" data-step="0.01" class="input item">
                 <h3>Taylor's Competency</h3>
             </div>
             <div data-name="modelClass" class="switch item">
