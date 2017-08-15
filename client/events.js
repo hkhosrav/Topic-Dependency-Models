@@ -70,6 +70,10 @@ function updateGraph(e) {
     });
 }
 
+function round(number, increment, offset) {
+    return Math.ceil((number) / increment ) * increment;
+}
+
 window.addEventListener("load", function() {
     Array.from(document.querySelectorAll(".input"))
         .forEach(function(elem) {
@@ -77,7 +81,7 @@ window.addEventListener("load", function() {
             var max = +elem.getAttribute("data-max") || 100;
             var step = +elem.getAttribute("data-step") || (max - min) / 100;
 
-            var initialValue = Math.floor(Math.random() * (max - min)) + min;
+            var initialValue = round((Math.random() * (max - min)) + min, step);
 
             var input = document.createElement("input");
             input.type = "text";
