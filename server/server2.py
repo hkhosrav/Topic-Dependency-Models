@@ -1,5 +1,5 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-from urlparse import urlparse, parse_qs
+from urlparse import urlparse, parse_qsl
 import json
 import time
 
@@ -16,7 +16,7 @@ class MyServer(BaseHTTPRequestHandler):
         self.end_headers()
         
         parsedURL = urlparse(self.path)
-        inputParams = parse_qs(parsedURL.query)
+        inputParams = dict(parse_qsl(parsedURL.query))
 
         # inputParams.studentNumber <int>
         # inputParams.studentDiversity <int>
