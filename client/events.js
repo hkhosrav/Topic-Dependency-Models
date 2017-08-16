@@ -1,7 +1,7 @@
 function updateGraph(e) {
     e.preventDefault();
 
-    var query = Array.from(document.querySelectorAll(".item")).map(function(x) {
+    var query = Array.from(document.querySelectorAll(".item")).map(function (x) {
         var input = x.querySelector("input");
         var value = input.value;
         if (input.type == "checkbox") {
@@ -11,7 +11,7 @@ function updateGraph(e) {
         return x.getAttribute("data-name") + "=" + value;
     }).join("&");
 
-    d3.json("http://localhost:9000", function(response) {
+    d3.json("http://localhost:9000", function (response) {
         var target = document.getElementById("graphContainer");
         target.innerHTML = "";
         var height = document.getElementById("configurationContainer").getBoundingClientRect().height;
@@ -19,31 +19,31 @@ function updateGraph(e) {
 
         // Get all unique nodes
         var uniqueNodes = response
-            .reduce(function(a, b) {
+            .reduce(function (a, b) {
                 return a.concat(b.data.nodes);
             }, [])
-            .reduce(function(carry, node) {
-                if (!carry.find(function(x) {
-                    return x == node
-                })) {
+            .reduce(function (carry, node) {
+                if (!carry.find(function (x) {
+                        return x == node
+                    })) {
                     carry.push(node);
                 }
                 return carry;
             }, [])
-            .map(function(x) {
+            .map(function (x) {
                 return {
                     id: x
                 }
             });
 
-        var uniqueNodeHashMap = uniqueNodes.reduce(function(carry, x) {
+        var uniqueNodeHashMap = uniqueNodes.reduce(function (carry, x) {
             carry[x.id] = x;
             return carry;
         }, {});
 
         var notifyQueue = [];
 
-        response.forEach(function(x, i) {
+        response.forEach(function (x, i) {
             var data = x.data;
             var subGraph = document.createElement("div");
 
@@ -56,7 +56,7 @@ function updateGraph(e) {
             subGraph.style.width = width + "px";
             subGraph.style.height = height + "px";
             target.appendChild(subGraph);
-            var edges = data.edges.map(function(edge) {
+            var edges = data.edges.map(function (edge) {
                 return {
                     target: uniqueNodeHashMap[edge[0]],
                     source: uniqueNodeHashMap[edge[1]],
@@ -70,18 +70,19 @@ function updateGraph(e) {
     });
 }
 
-function round(number, increment, offset) {
-    return Math.ceil((number) / increment ) * increment;
+// Adapted from https://stackoverflow.com/questions/14627566/rounding-in-steps-of-20-or-x-in-javascript
+function round(number, increment) {
+    return Math.ceil(number / increment) * increment;
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
     Array.from(document.querySelectorAll(".input"))
-        .forEach(function(elem) {
+        .forEach(function (elem) {
             var min = +elem.getAttribute("data-min") || 0;
             var max = +elem.getAttribute("data-max") || 100;
             var step = +elem.getAttribute("data-step") || (max - min) / 100;
 
-            var initialValue = round((Math.random() * (max - min)) + min, step);
+            var initialValue = round(+((Math.random() * (max - min)) + min), step);
 
             var input = document.createElement("input");
             input.type = "text";
@@ -108,7 +109,7 @@ window.addEventListener("load", function() {
             elem.appendChild(rangeContainer);
             elem.appendChild(input);
 
-            input.addEventListener("input", function(e) {
+            input.addEventListener("input", function (e) {
                 e.preventDefault();
                 var val = +e.target.value;
                 if (isNaN(val)) {
@@ -121,7 +122,7 @@ window.addEventListener("load", function() {
                 rangeInput.value = e.target.value;
             });
 
-            rangeInput.addEventListener("input", function(e) {
+            rangeInput.addEventListener("input", function (e) {
                 input.value = e.target.value;
             });
         });
