@@ -1,6 +1,6 @@
 from random import choice, randint, seed
 import numpy as np
-import scipy.stats
+#import scipy.stats
 seed(123)
 import math
 
