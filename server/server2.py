@@ -3,7 +3,9 @@ from urlparse import urlparse, parse_qsl
 import json
 import time
 
-from dataGenerator import MakeData
+from topicDependency import generateTDM
+from topicDependency import createGraph
+from dataGenerator import createDataset
 
 hostName = "localhost"
 hostPort = 9000
@@ -23,14 +25,17 @@ class MyServer(BaseHTTPRequestHandler):
         # inputParams.questionDifficulty <int>
         # inputParams.competencyValue <int>
         # inputParams.modelClass <"dynamic" | "static">
-        
+
+        # SQA has sid, qid, score
+        # QT has qid and list of associated topics
+        SQA, QT =  createDataset(inputParams)
         individualData = {
-            "name": "Individual Data",
-            "data": MakeData()
+            "name": "Taylor's Data",
+            "data": createGraph(inputParams)
         }
         compareAgainstData = {
             "name": "Class Average",
-            "data": MakeData()
+            "data":  generateTDM(SQA, QT)
         }
         self.wfile.write(str(json.dumps([individualData, compareAgainstData])))
 
