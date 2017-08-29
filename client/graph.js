@@ -9,6 +9,7 @@ function drawGraph(target, edges, nodes, notifyQueue, useNotify) {
 
     function ticked(node, radius) {
         return function () {
+console.log("called Tick");
             node
                 .attr("cx", (d, i) => {
                     d.x = Math.max(radius, Math.min(graphWidth - radius, d.x));
@@ -97,7 +98,29 @@ function drawGraph(target, edges, nodes, notifyQueue, useNotify) {
             }
             return 1;
         })
-        .attr("fill", "#fff");
+        .attr("fill", "#fff").call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+function dragstarted(d) {
+  d.fx = d.x;
+  d.fy = d.y;
+}
+
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+  d.x = d3.event.x;
+  d.y = d3.event.y;
+  ticked(node, nodeRadius)();
+}
+
+function dragended(d) {
+  d.fx = null;
+  d.fy = null;
+}
+
     var labels = container.append("g")
         .attr("class", "labels")
         .selectAll("text")
@@ -106,7 +129,10 @@ function drawGraph(target, edges, nodes, notifyQueue, useNotify) {
         .attr("dx", d => d.cx)
         .attr("dy", d => d.cy)
         .attr("text-anchor", "middle")
-        .text(d => d.id);
+        .text(d => d.id).call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
 
     notifyQueue.push({
         links: link,

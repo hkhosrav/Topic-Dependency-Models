@@ -11,7 +11,7 @@ function updateGraph(e) {
         return x.getAttribute("data-name") + "=" + value;
     }).join("&");
 
-    d3.json("http://localhost:9000?" + query, function (response) {
+    d3.json("https://khosravi.uqcloud.net/tdm/?" + query, function (response) {
         var target = document.getElementById("graphContainer");
         target.innerHTML = "";
         var height = document.getElementById("configurationContainer").getBoundingClientRect().height;
