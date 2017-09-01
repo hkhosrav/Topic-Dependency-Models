@@ -108,6 +108,37 @@ def ComputeScopeCompetency(A, T, I_A,topicCombinations):
        
     return topicCombinations
 
+def ComputeIndividualScopeCompetency(A, T, I_A,topicCombinations,Individual):
+
+    #sort students according to their total scores
+    
+    unsorted_d={}
+    for i in range(len(A)):
+        unsorted_d[i] = A[i].sum()
+    sorted_d = sorted(unsorted_d,key=lambda x:unsorted_d[x])
+
+    #match Individual's competency with one student
+
+    if Individual == 1:
+        target = sorted_d[len(sorted_d)-1]
+    else:
+        target = sorted_d[int(Individual*len(sorted_d))]
+    
+    for j in range(len(A[target])):
+        # scope
+        key = getTopicString(T[j])
+        if  key <>'' and key.count(',') <2: #removing edges with more two nodes for the time being
+
+            values = topicCombinations[key]
+            values[0]= values[0] + I_A[target][j]
+
+            # competencie
+            key = getTopicString(T[j])
+            values = topicCombinations[key]
+            values[1]=(A[target][j]+ values[1])
+       
+    return topicCombinations    
+
 def createGraphList(updatedTopicCombinations, tDict):
     output = []
     for key in updatedTopicCombinations:
@@ -131,19 +162,34 @@ def generateTDM(SQA, QT):
      uDict, uSize = mapUsersToNumbers(SQA) 
      qDict, qSize =mapQuestionsToNumbers(SQA)    
      T =  createTMatrix( QT, qDict, qSize, tDict, tSize)
-     A  = createAMatrix(SQA, uDict, uSize, qDict, qSize)
+     A  = createAMatrix(SQA, uDict, uSize, qDict, qSize) 
      I_A = createIndexMatrix(SQA, uDict, uSize, qDict, qSize)
      topicCombinations= addTopicCombination(T)
      updatedTopicCombinations = ComputeScopeCompetency(A, T, I_A,topicCombinations)
      edges = createGraphList(updatedTopicCombinations, tDict)
      nodes = getnodes(tDict)
-     print nodes
-
+     print edges
      return {
         "edges": edges,
         "nodes": nodes
     }
 
+def generateIndividualTDM(SQA, QT, individualComp):
+     tDict, tSize = mapTagsToNumbers(QT)
+     uDict, uSize = mapUsersToNumbers(SQA) 
+     qDict, qSize =mapQuestionsToNumbers(SQA)    
+     T =  createTMatrix( QT, qDict, qSize, tDict, tSize)
+     A  = createAMatrix(SQA, uDict, uSize, qDict, qSize) 
+     I_A = createIndexMatrix(SQA, uDict, uSize, qDict, qSize)
+     topicCombinations= addTopicCombination(T)
+     updatedTopicCombinations = ComputeIndividualScopeCompetency(A, T, I_A,topicCombinations,individualComp)
+     edges = createGraphList(updatedTopicCombinations, tDict)
+     nodes = getnodes(tDict)
+     print edges
+     return {
+        "edges": edges,
+        "nodes": nodes
+    }
 
 
 
@@ -162,7 +208,6 @@ def createGraph(inputParams):
 
     for i in range(int(inputParams['topicNumber'])):
         nodes.append('T'+str(i+1))
-    print nodes    
 
 
 

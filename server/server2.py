@@ -19,6 +19,8 @@ class MyServer(BaseHTTPRequestHandler):
         
         parsedURL = urlparse(self.path)
         inputParams = dict(parse_qsl(parsedURL.query))
+        print inputParams
+        indivdualComp = float(inputParams['competencyValue'])
 
         # inputParams.studentNumber <int>
         # inputParams.studentDiversity <int>
@@ -30,8 +32,8 @@ class MyServer(BaseHTTPRequestHandler):
         # QT has qid and list of associated topics
         SQA, QT =  createDataset(inputParams)
         individualData = {
-            "name": "Taylor's Data",
-            "data": createGraph(inputParams)
+            "name": "Random Indivual's Data",
+            "data":  generateIndividualTDM(SQA, QT, indivdualComp)
         }
         compareAgainstData = {
             "name": "Class Average",
