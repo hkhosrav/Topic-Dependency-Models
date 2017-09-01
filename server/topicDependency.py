@@ -168,7 +168,6 @@ def generateTDM(SQA, QT):
      updatedTopicCombinations = ComputeScopeCompetency(A, T, I_A,topicCombinations)
      edges = createGraphList(updatedTopicCombinations, tDict)
      nodes = getnodes(tDict)
-     print edges
      return {
         "edges": edges,
         "nodes": nodes
@@ -185,7 +184,6 @@ def generateIndividualTDM(SQA, QT, individualComp):
      updatedTopicCombinations = ComputeIndividualScopeCompetency(A, T, I_A,topicCombinations,individualComp)
      edges = createGraphList(updatedTopicCombinations, tDict)
      nodes = getnodes(tDict)
-     print edges
      return {
         "edges": edges,
         "nodes": nodes

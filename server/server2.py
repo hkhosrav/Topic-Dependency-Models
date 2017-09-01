@@ -5,6 +5,7 @@ import time
 
 from topicDependency import generateTDM
 from topicDependency import createGraph
+from topicDependency import generateIndividualTDM
 from dataGenerator import createDataset
 
 hostName = "localhost"
@@ -19,7 +20,6 @@ class MyServer(BaseHTTPRequestHandler):
         
         parsedURL = urlparse(self.path)
         inputParams = dict(parse_qsl(parsedURL.query))
-        print inputParams
         indivdualComp = float(inputParams['competencyValue'])
 
         # inputParams.studentNumber <int>
