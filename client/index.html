@@ -6,6 +6,7 @@
     <script src="d3.v4.min.js"></script>
     <script src="graph.js"></script>
     <script src="events.js"></script>
+	<script src="request.js"></script>
 </head>
 
 <body>
@@ -13,7 +14,11 @@
     <div id="root">
         <div id="graphContainer">
         </div>
-        <div id="configurationContainer">
+		<div class="tab">
+			<button class="tablinks" onclick="openContainer(event, 'configurationContainer')" id="defaultOpen">Synthetic Data</button>
+			<button class="tablinks" onclick="openContainer(event, 'loadContainer')">Real Data</button>
+		</div>
+        <div id="configurationContainer" class="tabcontent">
             <h2>Students</h2>
             <div data-name="studentNumber" data-min="0" data-max="200" data-step="1" class="input item">
                 <h3>Number of Students</h3>
@@ -63,6 +68,37 @@
                 Simulate
             </button>
         </div>
+		<div id="loadContainer" class="tabcontent">
+			<div>
+				<h4>Upload the Question-Topic file</h4>
+					<form enctype="multipart/form-data" method="post" onsubmit="uploadQT(); return false;">
+						<input type="file" id="qt" name="filename"/>
+						<input type="submit" value="Upload"/>
+					</form>
+			</div>
+			<hr />
+			<div>
+				<h4>Upload the Student-Question-Grade file</h4>
+					<form enctype="multipart/form-data" method="post" onsubmit="uploadSQA(); return false;">
+						<input type="file" id="sqa" name="filename"/>
+						<input type="submit" value="Upload"/>
+					</form>
+			</div>
+			<hr />
+			<div>
+			<h4>Select Student ID</h4>
+			<select id="selectUser">
+			<option value ="000">--Select User ID--</option>
+			</select>
+			<button id="refreshButton">
+                Refresh
+            </button>
+			</div>
+			<hr />
+			<button id="generateButton">
+                Generate Graph
+            </button>
+		</div>
     </div>
 </body>
 

@@ -137,16 +137,32 @@ def ComputeIndividualScopeCompetency(A, T, I_A,topicCombinations,Individual):
             values = topicCombinations[key]
             values[1]=(A[target][j]+ values[1])
        
-    return topicCombinations    
+    return topicCombinations
+
+def ComputeUserScopeCompetency(A, T, I_A,topicCombinations,userIndex):
+    for j in range(len(A[userIndex])):
+        # scope
+        key = getTopicString(T[j])
+        if  key <>'' and key.count(',') <2: #removing edges with more two nodes for the time being
+
+            values = topicCombinations[key]
+            values[0]= values[0] + I_A[userIndex][j]
+
+            # competencie
+            key = getTopicString(T[j])
+            values = topicCombinations[key]
+            values[1]=(A[userIndex][j]+ values[1])
+       
+    return topicCombinations
 
 def createGraphList(updatedTopicCombinations, tDict):
     output = []
     for key in updatedTopicCombinations:
         values = updatedTopicCombinations[key]
         nodes = key.split(',')
-        if len(nodes)==1:
+        if len(nodes)==1 and values[0]!=0:
             output.append([tDict.keys()[tDict.values().index(int(nodes[0]))],tDict.keys()[tDict.values().index(int(nodes[0]))],int(values[0]*1), int( values[1]/max(values[0],1)*100 )]   )
-        if len(nodes)==2:
+        if len(nodes)==2 and values[0]!=0:
             output.append([tDict.keys()[tDict.values().index(int(nodes[0]))],tDict.keys()[tDict.values().index(int(nodes[1]))], int( values[0] *1), int ( values[1]/max(values[0],1)*100)] )
     return output    
 
@@ -189,7 +205,29 @@ def generateIndividualTDM(SQA, QT, individualComp):
         "nodes": nodes
     }
 
+def generateUserTDM(SQA, QT,User):
+     tDict, tSize = mapTagsToNumbers(QT)
+     uDict, uSize = mapUsersToNumbers(SQA) 
+     qDict, qSize =mapQuestionsToNumbers(SQA)    
+     T =  createTMatrix( QT, qDict, qSize, tDict, tSize)
+     A  = createAMatrix(SQA, uDict, uSize, qDict, qSize) 
+     I_A = createIndexMatrix(SQA, uDict, uSize, qDict, qSize)
+     userIndex = uDict[User]
+     topicCombinations= addTopicCombination(T)
+     updatedTopicCombinations = ComputeUserScopeCompetency(A, T, I_A,topicCombinations,userIndex)
+     edges = createGraphList(updatedTopicCombinations, tDict)
+     nodes = getnodes(tDict)
+     print edges
+     return {
+        "edges": edges,
+        "nodes": nodes
+    }
+    
 
+def getUserList(SQA):
+    uDict, uSize = mapUsersToNumbers(SQA)
+    sorted_uDict = sorted(uDict)
+    return sorted_uDict
 
 
 

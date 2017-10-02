@@ -3,7 +3,7 @@ function drawGraph(target, edges, nodes, notifyQueue, useNotify) {
     var width = bBox.width;
     var height = bBox.height;
 
-    var nodeRadius = 20;
+    var nodeRadius = 30;
     var graphWidth = width - (nodeRadius * 2);
     var graphHeight = height - (nodeRadius * 2);
 

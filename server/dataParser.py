@@ -1,7 +1,7 @@
 import numpy as np
 import csv
 
-FOLDERNAME = "realData"
+FOLDERNAME = "uploads"
 SQAFILE ="SQA.CSV"
 QTFILE = "QT.CSV"
 
