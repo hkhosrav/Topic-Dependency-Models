@@ -1,0 +1,106 @@
+<!doctype html>
+
+<head>
+    <title>Topic Dependency Models</title>
+    <link href="style.css" rel="stylesheet" />
+    <script src="d3.v4.min.js"></script>
+    <script src="graph.js"></script>
+    <script src="events.js"></script>
+	<script src="request.js"></script>
+</head>
+
+<body>
+    <h1>Topic Dependency Model Generator</h1>
+    <div id="root">
+        <div id="graphContainer">
+        </div>
+		<!--<div class="tab">
+			<button class="tablinks" onclick="openContainer(event, 'configurationContainer')" id="defaultOpen">Synthetic Data</button>
+			<button class="tablinks" onclick="openContainer(event, 'loadContainer')">Real Data</button>
+		</div> -->
+        <div id="configurationContainer" class="tabcontent">
+            <h2>Students</h2>
+            <div data-name="studentNumber" data-min="0" data-max="200" data-step="1" class="input item">
+                <h3>Number of Students</h3>
+            </div>
+            <div data-name="studentDiversity" data-min="0" data-max="1" data-step="0.1" class="input item">
+                <h3>Diversity Of Students</h3>
+            </div>
+            <hr />
+            <h2>Questions</h2>
+            <div data-name="questionNumber" data-min="1" data-max="300" data-step="1" class="input item">
+                <h3>Number of Questions</h3>
+            </div>
+            <div data-name="questionDifficulty" data-min="0" data-max="1" data-step="0.01" class="input item">
+                <h3>Difficulty of Questions</h3>
+            </div>
+            <hr />
+ 				<h2>Topics</h2>
+            <div data-name="topicNumber" data-min="1" data-max="10" data-step="1" class="input item">
+                <h3>Number of Topics</h3>
+            </div>
+            <div data-name="topicDiversity" data-min="0" data-max="1" data-step="0.01" class="input item">
+                <h3>Diversity of Topics</h3>
+            </div>
+            <hr />            
+            <h2>Settings</h2>
+            <div data-name="competencyValue" data-min="0" data-max="1" data-step="0.01" class="input item">
+                <h3>Random Indivual's Competency</h3>
+            </div>
+                <!--
+            <div data-name="modelClass" class="switch item">
+                <h3>Model Class</h3>
+
+                <span class="switchLabel">Static</span>
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+                </div>
+                <span class="switchLabel">Dynamic</span>
+
+            </div>
+                            -->
+            <hr />
+            <button id="simulateButton">
+                Simulate
+            </button>
+        </div>
+		<!-- <div id="loadContainer" class="tabcontent">
+			<div>
+				<h4>Upload the Question-Topic file</h4>
+					<form enctype="multipart/form-data" method="post" onsubmit="uploadQT(); return false;">
+						<input type="file" id="qt" name="filename"/>
+						<input type="submit" value="Upload"/>
+					</form>
+			</div>
+			<hr />
+			<div>
+				<h4>Upload the Student-Question-Grade file</h4>
+					<form enctype="multipart/form-data" method="post" onsubmit="uploadSQA(); return false;">
+						<input type="file" id="sqa" name="filename"/>
+						<input type="submit" value="Upload"/>
+					</form>
+			</div>
+			<hr />
+			<div>
+			<h4>Select Student ID</h4>
+			<select id="selectUser">
+			<option value ="000">--Select User ID--</option>
+			</select>
+			<button id="refreshButton">
+                Refresh
+            </button>
+			</div>
+			<hr />
+			<button id="generateButton">
+                Generate Graph
+            </button>
+		</div>
+    </div>
+-->
+</body>
+
+</html>
