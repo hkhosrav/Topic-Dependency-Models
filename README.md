@@ -7,12 +7,14 @@ A prototype of the tool can be viewed at https://hkhosrav.github.io/Topic-Depend
 
 For more information on this work please see our paper at http://hassan-khosravi.net/publications/cooper2018.pdf
 
-To cite our work on Topic-Dependency-Models, please use the following citation: Cooper, C., Khosravi, H., 2018. Reciprocal Peer Recommendation for Learning Purposes. in Proceedings of the 8th International Learning Analytics and Knowledge (LAK) Conference
-
+To cite our work on Topic-Dependency-Models, please use the following citation: 
+```
 @inproceedings{Cooper2018,
-title={Reciprocal Peer Recommendation for Learning Purposes},
+title={Graph-based Visual Topic Dependency Models: Supporting Assessment Design and Delivery at Scale},
 author={Cooper Kendra and Khosravi Hassan (2018)},
 booktitle={Proceedings of the 8th International Learning Analytics and Knowledge (LAK) Conference},
 pages={,
 year={2018},
 organization={ACM}
+}
+```
