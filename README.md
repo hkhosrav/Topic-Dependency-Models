@@ -9,7 +9,7 @@ For more information on this work please see our paper at http://hassan-khosravi
 
 To cite our work on Topic-Dependency-Models, please use the following citation: 
 ```
-@inproceedings{Cooper:2018:GVT:3170358.3170418,
+@inproceedings{Cooper:2018:TDMs,
 author = {Cooper, Kendra and Khosravi, Hassan},
 title = {Graph-based Visual Topic Dependency Models: Supporting Assessment Design and Delivery at Scale},
 booktitle = {Proceedings of the 8th International Conference on Learning Analytics and Knowledge},
