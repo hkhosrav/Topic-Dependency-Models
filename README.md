@@ -9,12 +9,21 @@ For more information on this work please see our paper at http://hassan-khosravi
 
 To cite our work on Topic-Dependency-Models, please use the following citation: 
 ```
-@inproceedings{Cooper2018,
-title={Graph-based Visual Topic Dependency Models: Supporting Assessment Design and Delivery at Scale},
-author={Cooper Kendra and Khosravi Hassan (2018)},
-booktitle={Proceedings of the 8th International Learning Analytics and Knowledge (LAK) Conference},
-pages={,
-year={2018},
-organization={ACM}
-}
+@inproceedings{Cooper:2018:GVT:3170358.3170418,
+author = {Cooper, Kendra and Khosravi, Hassan},
+title = {Graph-based Visual Topic Dependency Models: Supporting Assessment Design and Delivery at Scale},
+booktitle = {Proceedings of the 8th International Conference on Learning Analytics and Knowledge},
+series = {LAK '18},
+year = {2018},
+isbn = {978-1-4503-6400-3},
+location = {Sydney, New South Wales, Australia},
+pages = {11--15},
+numpages = {5},
+url = {http://doi.acm.org/10.1145/3170358.3170418},
+doi = {10.1145/3170358.3170418},
+acmid = {3170418},
+publisher = {ACM},
+address = {New York, NY, USA},
+keywords = {graph algorithms, student assessment, visual analytics},
+} 
 ```
